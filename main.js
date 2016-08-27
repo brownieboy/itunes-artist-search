@@ -1,16 +1,13 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var ipc = require('ipc');
-var dialog = require('dialog');
+const {app, BrowserWindow, dialog, ipcMain} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
-	if (process.platform != 'darwin') {
-		app.quit();
-	}
+  if (process.platform != 'darwin') {
+    app.quit();
+  }
 });
 
 // This method will be called when Electron has done everything
@@ -20,7 +17,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -32,8 +29,8 @@ app.on('ready', function() {
 });
 
 // respond to render thread events
-ipc.on('bounce', function(event, arg) {
-	new Notification('Test notification');
+ipcMain.on('bounce', function(event, arg) {
+  new Notification('Test notification');
 });
 
 
